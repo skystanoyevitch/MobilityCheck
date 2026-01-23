@@ -22,4 +22,6 @@ export function useCamera() {
     };
     getCameraDevice();
   }, [hasPermission]);
+
+  return { hasPermission, device };
 }
