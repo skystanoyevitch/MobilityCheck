@@ -3,6 +3,6 @@ export interface Assessment {
   timestamp: string;
   angleData: { baseline: number; maxROM: number };
   side: "left" | "right";
-  movementType: "flexion";
+  movementType: "flexion" | "abduction" | "rotation";
   imageQualityScore: number;
 }
