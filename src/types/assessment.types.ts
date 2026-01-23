@@ -1,9 +1,8 @@
 export interface Assessment {
-  id: number;
-  timestamp: Date;
+  id: string;
+  timestamp: string;
   angleData: { baseline: number; maxROM: number };
-  shoulderLeft: string;
-  shoulderRight: string;
-  flexion: number;
+  side: "left" | "right";
+  movementType: "flexion";
   imageQualityScore: number;
 }
