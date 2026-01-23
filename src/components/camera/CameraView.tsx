@@ -21,6 +21,12 @@ const CameraView = () => {
       </View>
     );
   }
+
+  return (
+    <>
+      <Camera device={device} isActive={true} style={StyleSheet.absoluteFill} />
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
@@ -29,4 +35,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
+  //   camera: {
+  //     position: absoluteFill,
+  //   },
 });
