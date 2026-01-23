@@ -22,11 +22,7 @@ const CameraView = () => {
     );
   }
 
-  return (
-    <>
-      <Camera device={device} isActive={true} style={StyleSheet.absoluteFill} />
-    </>
-  );
+  return <Camera device={device} isActive={true} style={styles.camera} />;
 };
 
 const styles = StyleSheet.create({
@@ -35,7 +31,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-  //   camera: {
-  //     position: absoluteFill,
-  //   },
+  camera: StyleSheet.absoluteFillObject,
 });
+
+export default CameraView;
