@@ -13,6 +13,14 @@ const CameraView = () => {
       </View>
     );
   }
+
+  if (!hasPermission) {
+    return (
+      <View style={styles.container}>
+        <Text>Camera Permission Denied</Text>
+      </View>
+    );
+  }
 };
 
 const styles = StyleSheet.create({
