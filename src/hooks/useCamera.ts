@@ -17,8 +17,8 @@ export function useCamera() {
   useEffect(() => {
     const getCameraDevice = async () => {
       const devices = await Camera.getAvailableCameraDevices();
-      const backCamera = devices.find((d) => d.position === "back");
-      setDevice(backCamera ?? null);
+      const frontCamera = devices.find((d) => d.position === "front");
+      setDevice(frontCamera ?? null);
     };
     getCameraDevice();
   }, [hasPermission]);
