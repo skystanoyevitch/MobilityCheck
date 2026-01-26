@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import CameraView from "@/components/camera/CameraView";
+import PoseOverlay from "@/components/pose/PoseOverlay";
 
 export default function App() {
   const handlePoseDetected = (pose: any) => {
@@ -10,6 +11,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <CameraView />
+      <PoseOverlay />
       {/* <Text>Testing..</Text> */}
     </View>
   );
