@@ -16,6 +16,11 @@ export default function PoseOverlay() {
     }
   }
 
+  const angle =
+    points.length === 3
+      ? calculateAngle(points[0], points[1], points[2])
+      : null;
+
   return (
     <>
       <View style={styles.cameraOverlay} onTouchEnd={handleTap}>
@@ -25,6 +30,7 @@ export default function PoseOverlay() {
             style={[styles.circle, { left: point.x - 10, top: point.y - 10 }]}
           />
         ))}
+        {angle && <Text style={styles.angleText}></Text>}
       </View>
     </>
   );
@@ -38,5 +44,16 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "rgba(255, 255, 255, 0.7)",
     position: "absolute",
+  },
+  angleText: {
+    position: "absolute",
+    top: 50,
+    alignSelf: "center",
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 10,
+    borderRadius: 8,
   },
 });
