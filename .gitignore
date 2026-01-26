@@ -21,6 +21,9 @@ expo-env.d.ts
 # Metro
 .metro-health-check*
 
+# Local Markdown Files
+*.md
+
 # debug
 npm-debug.*
 yarn-debug.*
