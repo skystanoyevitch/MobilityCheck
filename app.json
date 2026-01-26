@@ -14,7 +14,10 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.internaldelegate.MobilityCheck"
+      "bundleIdentifier": "com.internaldelegate.MobilityCheck",
+      "infoPlist": {
+        "NSCameraUsageDescription": "MobilityCheck needs camera access to analyze your body movements for mobility assessments."
+      }
     },
     "android": {
       "adaptiveIcon": {

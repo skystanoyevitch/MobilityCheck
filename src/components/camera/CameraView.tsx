@@ -1,7 +1,7 @@
 import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useCamera } from "@/hooks/useCamera";
-import { Camera } from "react-native-vision-camera-v3-pose-detection";
+import { Camera } from "react-native-vision-camera";
 import { usePoseDetection } from "@/hooks/usePoseDetection";
 
 const CameraView = () => {
@@ -24,15 +24,7 @@ const CameraView = () => {
     );
   }
 
-  return (
-    <Camera
-      device={device}
-      isActive={true}
-      style={styles.camera}
-      callback={handlePoseDetection}
-      options={{}}
-    />
-  );
+  return <Camera device={device} isActive={true} style={styles.camera} />;
 };
 
 const styles = StyleSheet.create({
