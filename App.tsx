@@ -9,8 +9,8 @@ export default function App() {
 
   return (
     <View style={styles.container}>
-      {/* <CameraView /> */}
-      <Text>Testing..</Text>
+      <CameraView />
+      {/* <Text>Testing..</Text> */}
     </View>
   );
 }
