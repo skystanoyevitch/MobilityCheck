@@ -6,6 +6,7 @@ type Point = { x: number; y: number };
 type CapturedPhoto = string | null;
 type baselineAngleType = number | null;
 type maxROMAngleType = number | null;
+// type totalRomType = number | null;
 
 interface PoseOverlayProps {
   onTakePhoto: () => Promise<string | null>;
@@ -49,6 +50,16 @@ export default function PoseOverlay({ onTakePhoto }: PoseOverlayProps) {
     }
   }
 
+  function handleRetake() {
+    setCapturedPhoto(null);
+    setPoints([]);
+    setBaselineAngle(null);
+    setMaxROMAngle(null);
+  }
+
+  const totalROM =
+    baselineAngle && maxROMAngle ? maxROMAngle - baselineAngle : null;
+
   return (
     <>
       <View style={styles.cameraOverlay} onTouchEnd={handleTap}>
@@ -66,25 +77,35 @@ export default function PoseOverlay({ onTakePhoto }: PoseOverlayProps) {
           />
         ))}
         {angle && <Text style={styles.angleText}>Angle: {angle}°</Text>}
+        {totalROM !== null && (
+          <Text style={styles.totalRomText}>Total ROM: {totalROM}°</Text>
+        )}
         {angle !== null && baselineAngle === null && (
           <TouchableOpacity
             style={styles.captureButton}
             onPress={handleSaveBaseline}
           >
-            <Text style={styles.captureButtonText}>Save Baseline</Text>
+            <Text style={styles.buttonText}>Save Baseline</Text>
           </TouchableOpacity>
         )}
         {angle !== null && baselineAngle !== null && maxROMAngle === null && (
           <TouchableOpacity style={styles.captureButton} onPress={handleMaxROM}>
-            <Text style={styles.captureButtonText}>Save Max ROM</Text>
+            <Text style={styles.buttonText}>Save Max ROM</Text>
           </TouchableOpacity>
         )}
+
+        {totalROM !== null && (
+          <TouchableOpacity style={styles.captureButton} onPress={handleRetake}>
+            <Text style={styles.buttonText}>Retake Photo</Text>
+          </TouchableOpacity>
+        )}
+
         {!capturedPhoto && (
           <TouchableOpacity
             style={styles.captureButton}
             onPress={handleCapture}
           >
-            <Text style={styles.captureButtonText}>Capture Photo</Text>
+            <Text style={styles.buttonText}>Capture Photo</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -113,6 +134,17 @@ const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 8,
   },
+  totalRomText: {
+    position: "absolute",
+    top: 100,
+    alignSelf: "center",
+    fontSize: 24,
+    fontWeight: "bold",
+    color: "white",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    padding: 10,
+    borderRadius: 8,
+  },
   captureButton: {
     position: "absolute",
     bottom: 40,
@@ -121,7 +153,7 @@ const styles = StyleSheet.create({
     padding: 15,
     borderRadius: 10,
   },
-  captureButtonText: {
+  buttonText: {
     fontSize: 18,
     fontWeight: "bold",
     color: "#000",
