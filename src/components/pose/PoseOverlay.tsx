@@ -40,6 +40,7 @@ export default function PoseOverlay({ onTakePhoto }: PoseOverlayProps) {
   function handleSaveBaseline() {
     if (angle != null) {
       setBaselineAngle(angle);
+      setPoints([]);
     }
   }
   function handleMaxROM() {
@@ -65,6 +66,19 @@ export default function PoseOverlay({ onTakePhoto }: PoseOverlayProps) {
           />
         ))}
         {angle && <Text style={styles.angleText}>Angle: {angle}°</Text>}
+        {angle !== null && baselineAngle === null && (
+          <TouchableOpacity
+            style={styles.captureButton}
+            onPress={handleSaveBaseline}
+          >
+            <Text style={styles.captureButtonText}>Save Baseline</Text>
+          </TouchableOpacity>
+        )}
+        {angle !== null && baselineAngle !== null && maxROMAngle === null && (
+          <TouchableOpacity style={styles.captureButton} onPress={handleMaxROM}>
+            <Text style={styles.captureButtonText}>Save Max ROM</Text>
+          </TouchableOpacity>
+        )}
         {!capturedPhoto && (
           <TouchableOpacity
             style={styles.captureButton}
