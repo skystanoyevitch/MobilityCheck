@@ -48,6 +48,7 @@ const CameraView = () => {
         ref={cameraRef}
         isActive={true}
         style={styles.camera}
+        photo={true}
       />
       <PoseOverlay onTakePhoto={handleTakePhoto} />
     </>

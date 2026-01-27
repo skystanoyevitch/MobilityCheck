@@ -4,6 +4,8 @@ import { useState } from "react";
 
 type Point = { x: number; y: number };
 type CapturedPhoto = string | null;
+type baselineAngleType = number | null;
+type maxROMAngleType = number | null;
 
 interface PoseOverlayProps {
   onTakePhoto: () => Promise<string | null>;
@@ -12,15 +14,22 @@ interface PoseOverlayProps {
 export default function PoseOverlay({ onTakePhoto }: PoseOverlayProps) {
   const [points, setPoints] = useState<Point[]>([]);
   const [capturedPhoto, setCapturedPhoto] = useState<CapturedPhoto>(null);
+  const [baselineAngle, setBaselineAngle] = useState<baselineAngleType>(null);
+  const [maxROMAngle, setMaxROMAngle] = useState<maxROMAngleType>(null);
 
   function handleTap(event: any) {
     const { locationX, locationY } = event.nativeEvent;
 
-    if (points.length < 3) {
+    if (capturedPhoto && points.length < 3) {
       const newPoint: Point = { x: locationX, y: locationY };
       setPoints([...points, newPoint]);
     }
   }
+  const angle =
+    points.length === 3
+      ? calculateAngle(points[0], points[1], points[2])
+      : null;
+
   async function handleCapture(event: any) {
     const photoPath = await onTakePhoto();
     if (photoPath) {
@@ -28,21 +37,27 @@ export default function PoseOverlay({ onTakePhoto }: PoseOverlayProps) {
     }
   }
 
-  const angle =
-    points.length === 3
-      ? calculateAngle(points[0], points[1], points[2])
-      : null;
+  function handleSaveBaseline() {
+    if (angle != null) {
+      setBaselineAngle(angle);
+    }
+  }
+  function handleMaxROM() {
+    if (angle != null) {
+      setMaxROMAngle(angle);
+    }
+  }
 
   return (
     <>
-      {capturedPhoto && (
-        <Image
-          source={{ uri: `file://${capturedPhoto}` }}
-          style={styles.capturedPhoto}
-          resizeMode="contain"
-        />
-      )}
       <View style={styles.cameraOverlay} onTouchEnd={handleTap}>
+        {capturedPhoto && (
+          <Image
+            source={{ uri: `file://${capturedPhoto}` }}
+            resizeMode="cover"
+            style={styles.capturedPhoto}
+          />
+        )}
         {points.map((point, index) => (
           <View
             key={index}
