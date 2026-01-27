@@ -28,8 +28,15 @@ const CameraView = () => {
 
   const handleTakePhoto = async () => {
     if (cameraRef.current) {
-      const photo = await cameraRef.current.takePhoto();
-      return photo.path;
+      try {
+        const photo = await cameraRef.current.takePhoto({
+          flash: "off",
+        });
+        return photo.path;
+      } catch (error) {
+        console.error("Failed to take photo:", error);
+        return null;
+      }
     }
     return null;
   };
