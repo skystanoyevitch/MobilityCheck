@@ -1,12 +1,14 @@
-import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { useCamera } from "@/hooks/useCamera";
 import { Camera } from "react-native-vision-camera";
 import { usePoseDetection } from "@/hooks/usePoseDetection";
+import { useRef } from "react";
+import PoseOverlay from "../pose/PoseOverlay";
 
 const CameraView = () => {
   const { hasPermission, device } = useCamera();
   const { handlePoseDetection } = usePoseDetection();
+  const cameraRef = useRef<Camera>(null);
 
   if (!device) {
     return (
@@ -24,7 +26,25 @@ const CameraView = () => {
     );
   }
 
-  return <Camera device={device} isActive={true} style={styles.camera} />;
+  const handleTakePhoto = async () => {
+    if (cameraRef.current) {
+      const photo = await cameraRef.current.takePhoto();
+      return photo.path;
+    }
+    return null;
+  };
+
+  return (
+    <>
+      <Camera
+        device={device}
+        ref={cameraRef}
+        isActive={true}
+        style={styles.camera}
+      />
+      <PoseOverlay onTakePhoto={handleTakePhoto} />
+    </>
+  );
 };
 
 const styles = StyleSheet.create({
